@@ -1,0 +1,395 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+#app {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.screen {
+    display: none;
+    padding: 20px;
+}
+
+.screen.active {
+    display: block;
+}
+
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #667eea;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.description {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.instructions {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.instructions h3 {
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    line-height: 2;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+}
+
+.start-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 15px 40px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-control {
+    padding: 10px 20px;
+    font-size: 1em;
+}
+
+.btn-stop {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-stop:hover {
+    background: #c82333;
+}
+
+/* Game Screen */
+.game-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.timer {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    font-size: 1.1em;
+}
+
+.stats span {
+    color: #555;
+}
+
+.game-canvas-wrap {
+    position: relative;
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#game-canvas {
+    display: block;
+    margin: 0 auto;
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    background: #f8f9fa;
+    cursor: default;
+}
+
+.pause-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.pause-overlay.active {
+    display: flex;
+}
+
+.pause-overlay-inner {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 90%;
+    max-height: 85%;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.pause-overlay-inner h3 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+.results-grid-compact {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.results-grid-compact .result-card {
+    padding: 12px;
+}
+
+.results-grid-compact .result-card h4 {
+    font-size: 0.95em;
+    color: #667eea;
+    margin-bottom: 8px;
+}
+
+.results-grid-compact .result-value {
+    font-size: 1.5em;
+}
+
+.performance-metrics-compact {
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.performance-metrics-compact .metric {
+    padding: 8px 0;
+    font-size: 1em;
+}
+
+.pause-overlay-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.results-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.game-instructions {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #555;
+    min-height: 30px;
+}
+
+#trial-instruction {
+    font-weight: 600;
+}
+
+/* Results Screen */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.result-card {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.result-card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.result-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.performance-metrics {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.performance-metrics h3 {
+    color: #667eea;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.1em;
+}
+
+.metric:last-child {
+    border-bottom: none;
+}
+
+.metric span:first-child {
+    color: #666;
+}
+
+.metric span:last-child {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .game-canvas-wrap {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    #game-canvas {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+    
+    .results-grid-compact {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .pause-overlay-inner {
+        padding: 16px;
+        max-height: 80vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .results-grid-compact {
+        grid-template-columns: 1fr;
+    }
+}

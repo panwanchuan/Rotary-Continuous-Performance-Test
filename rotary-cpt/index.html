@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotary-CPT: Continuous Performance Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="container">
+                <h1>Rotary-CPT</h1>
+                <h2>Continuous Performance Test</h2>
+                <p class="description">
+                    A timing-based test to assess sustained attention, impulsivity, and vigilance.
+                </p>
+                <div class="instructions">
+                    <h3>Instructions:</h3>
+                    <ul>
+                        <li>Watch the rotating pointer around the circular dial</li>
+                        <li>When a <strong>blue window</strong> appears, press <strong>SPACEBAR</strong> only if the pointer is inside it</li>
+                        <li>Do <strong>NOT</strong> press spacebar when the window is red or invalid</li>
+                        <li>Be quick but accurate!</li>
+                    </ul>
+                </div>
+                <div class="start-actions">
+                    <button id="start-demo-btn" class="btn btn-primary">Start 30-Second Demo</button>
+                    <button id="start-full-game-btn" class="btn btn-secondary">Play Full Game (15 min)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="timer">
+                        <span>Time: </span>
+                        <span id="timer-display">30</span><span id="timer-suffix">s</span>
+                    </div>
+                    <div class="stats">
+                        <span>Hits: <span id="hits-count">0</span></span>
+                        <span>Misses: <span id="misses-count">0</span></span>
+                        <span>False Alarms: <span id="false-alarms-count">0</span></span>
+                    </div>
+                    <div id="game-controls-wrap" class="game-controls" style="display: none;">
+                        <button type="button" id="pause-btn" class="btn btn-control">Pause</button>
+                        <button type="button" id="stop-btn" class="btn btn-control btn-stop">Stop</button>
+                    </div>
+                </div>
+                <div class="game-canvas-wrap">
+                    <canvas id="game-canvas"></canvas>
+                    <div id="pause-overlay" class="pause-overlay">
+                        <div class="pause-overlay-inner">
+                            <h3>Paused — Results so far</h3>
+                            <div class="results-grid results-grid-compact">
+                                <div class="result-card">
+                                    <h4>Accuracy</h4>
+                                    <div class="result-value" id="pause-accuracy-value">0%</div>
+                                </div>
+                                <div class="result-card">
+                                    <h4>Reaction Time</h4>
+                                    <div class="result-value" id="pause-reaction-time-value">0 ms</div>
+                                </div>
+                                <div class="result-card">
+                                    <h4>Hits</h4>
+                                    <div class="result-value" id="pause-results-hits">0</div>
+                                </div>
+                                <div class="result-card">
+                                    <h4>Misses</h4>
+                                    <div class="result-value" id="pause-results-misses">0</div>
+                                </div>
+                                <div class="result-card">
+                                    <h4>False Alarms</h4>
+                                    <div class="result-value" id="pause-results-false-alarms">0</div>
+                                </div>
+                                <div class="result-card">
+                                    <h4>Correct Rejections</h4>
+                                    <div class="result-value" id="pause-results-correct-rejections">0</div>
+                                </div>
+                            </div>
+                            <div class="performance-metrics performance-metrics-compact">
+                                <div class="metric"><span>Hit Rate:</span><span id="pause-hit-rate">0%</span></div>
+                                <div class="metric"><span>False Alarm Rate:</span><span id="pause-false-alarm-rate">0%</span></div>
+                                <div class="metric"><span>d':</span><span id="pause-d-prime">0.00</span></div>
+                                <div class="metric"><span>Mean RT:</span><span id="pause-mean-rt">0 ms</span></div>
+                                <div class="metric"><span>RT SD:</span><span id="pause-rt-sd">0 ms</span></div>
+                            </div>
+                            <div class="pause-overlay-actions">
+                                <button type="button" id="resume-btn-overlay" class="btn btn-primary">Resume</button>
+                                <button type="button" id="stop-btn-overlay" class="btn btn-stop">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-instructions">
+                    <p id="trial-instruction">Wait for the blue window... Press SPACEBAR to respond</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="container">
+                <h1>Demo Results</h1>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>Accuracy</h3>
+                        <div class="result-value" id="accuracy-value">0%</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Reaction Time</h3>
+                        <div class="result-value" id="reaction-time-value">0 ms</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Hits</h3>
+                        <div class="result-value" id="results-hits">0</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Misses</h3>
+                        <div class="result-value" id="results-misses">0</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>False Alarms</h3>
+                        <div class="result-value" id="results-false-alarms">0</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Correct Rejections</h3>
+                        <div class="result-value" id="results-correct-rejections">0</div>
+                    </div>
+                </div>
+                <div class="performance-metrics">
+                    <h3>Performance Metrics</h3>
+                    <div class="metric">
+                        <span>Hit Rate:</span>
+                        <span id="hit-rate">0%</span>
+                    </div>
+                    <div class="metric">
+                        <span>False Alarm Rate:</span>
+                        <span id="false-alarm-rate">0%</span>
+                    </div>
+                    <div class="metric">
+                        <span>d' (Sensitivity):</span>
+                        <span id="d-prime">0.00</span>
+                    </div>
+                    <div class="metric">
+                        <span>Mean RT:</span>
+                        <span id="mean-rt">0 ms</span>
+                    </div>
+                    <div class="metric">
+                        <span>RT Variability (SD):</span>
+                        <span id="rt-sd">0 ms</span>
+                    </div>
+                </div>
+                <div class="results-actions">
+                    <button id="restart-btn" class="btn btn-primary">Try Again</button>
+                    <button id="play-full-game-btn" class="btn btn-secondary" style="display: none;">Play Full Game (15 min)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
